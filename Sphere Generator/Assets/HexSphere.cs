@@ -49,7 +49,7 @@ public class HexSphere : MonoBehaviour
     {
 
         int numVerticies = 12;
-        int numTriangles = 30;
+        int numTriangles = 20;
         //Create and Array of Vector3 Verticies for the sphere//
         vertices = new Vector3[numVerticies];
         for(int i = 0; i < numVerticies; i++)
@@ -60,13 +60,14 @@ public class HexSphere : MonoBehaviour
         }
 
         //Create an array of int triangles for the sphere//
-        triangles = new int[numTriangles];
-        for(int i = 0; i < numVerticies; i++)
+        triangles = new int[numTriangles * 3];
+        int triangleIndex = 0;
+        for(int i = 0; i < numVerticies-2; i++)
         {
-            Debug.Log(i);
-            triangles[i * 3] = i ;
-            triangles[i * 3 + 1] = (i+1) % numVerticies;
-            triangles[i * 3 + 2] = numVerticies;
+
+            triangles[triangleIndex++] = 0 ;
+            triangles[triangleIndex++] = i + 1;
+            triangles[triangleIndex++] = i + 2;
 
         }
     }
@@ -74,17 +75,20 @@ public class HexSphere : MonoBehaviour
     private void Subdivide()
     {
         int numVertices = vertices.Length;
-        int numTriangles = triangles.Length;
+        int numTriangles = triangles.Length / 3;
 
-        Vector3[] newVertices = new Vector3[numVertices + numTriangles];
-        int[] newTriangles = new int[numTriangles * 4 ];
+        Vector3[] newVertices = new Vector3[numVertices + numTriangles * 3];
+        int[] newTriangles = new int[numTriangles * 4 * 3];
 
-        for(int i = 0; i < numTriangles; i+= 3)
+        int newVertexIndex = numVertices;
+        int newTriangleIndex = 0;
+
+        for(int i = 0; i < numTriangles; i++)
         {
             //Get te tree Verticies of the triangle//
-            Vector3 v1 = vertices[triangles[i]];
-            Vector3 v2 = vertices[triangles[i + 1]];
-            Vector3 v3 = vertices[triangles[i + 2]];
+            Vector3 v1 = vertices[triangles[i * 3]];
+            Vector3 v2 = vertices[triangles[i * 3 + 1]];
+            Vector3 v3 = vertices[triangles[i * 3 + 2]];
 
             //Create three new vertices at the at the midpoints of the tirangle edges//
             Vector3 v4 = (v1 + v2) / 2.0f;
@@ -97,26 +101,24 @@ public class HexSphere : MonoBehaviour
             v6.Normalize();
 
             //Assign th enew vertices to the newVertices array//
-            newVertices[numVertices + i] = v4;
-            newVertices[numVertices + i + 1] = v5;
-            newVertices[numVertices + i + 2] = v6;
+            newVertices[newVertexIndex++] = v4;
+            newVertices[newVertexIndex++] = v5;
+            newVertices[newVertexIndex++] = v6;
 
             //Assign the new triangels to the newTriangles array//
-            newTriangles[i * 4] = triangles[i];
-            newTriangles[i * 4 + 1] = numVertices + i;
-            newTriangles[i * 4 + 2] = numVertices + i + 2;
+            newTriangles[newTriangleIndex++] = triangles[i * 3];
+            newTriangles[newTriangleIndex++] = newVertexIndex - 3;
+            newTriangles[newTriangleIndex++] = newVertexIndex - 1;
 
-            newTriangles[i * 4 + 3] = numVertices + i;
-            newTriangles[i * 4 + 4] = triangles[i + 1];
-            newTriangles[i * 4 + 5] = numVertices + i + 1;
+            newTriangles[newTriangleIndex++] = newVertexIndex - 3;
+            newTriangles[newTriangleIndex++] = triangles[i * 3 + 1];
+            newTriangles[newTriangleIndex++] = newVertexIndex - 2;
 
-            newTriangles[i * 4 + 6] = numVertices + i + 1;
-            newTriangles[i * 4 + 7] = triangles[i + 2];
-            newTriangles[i * 4 + 8] = numVertices + i + 2;
+            newTriangles[newTriangleIndex++] = newVertexIndex -1 ;
+            newTriangles[newTriangleIndex++] = triangles[i * 3 + 2];
+            newTriangles[newTriangleIndex++] = newVertexIndex -2 ;
 
-            newTriangles[i * 4 + 9] = numVertices + i;
-            newTriangles[i * 4 + 10] = numVertices + i + 1;
-            newTriangles[i * 4 + 11] = numVertices + i + 2;
+
         }
 
         //Replace the old vertices and the triangles with the new ones//
