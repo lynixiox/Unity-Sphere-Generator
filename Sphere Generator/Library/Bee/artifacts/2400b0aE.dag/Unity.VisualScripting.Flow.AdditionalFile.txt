@@ -1,1 +1,1 @@
-/home/gandalf/Sphere Generator
+/home/gandalf/Documents/Unity-Sphere-Generator/Sphere Generator
