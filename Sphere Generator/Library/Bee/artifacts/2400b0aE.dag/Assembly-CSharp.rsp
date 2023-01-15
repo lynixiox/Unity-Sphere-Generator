@@ -346,6 +346,7 @@
 -r:"Library/Bee/artifacts/2400b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/2400b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/HexSphere.cs"
+"Assets/Scripts/CameraMovement.cs"
 -langversion:9.0
 
 /deterministic
