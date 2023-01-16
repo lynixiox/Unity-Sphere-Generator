@@ -12,6 +12,7 @@ public class sTile
     public List<sTile> tiles;           //pList of tiles//
     public List<sCorner> corners;       //plist of corners//
     public List<sEdge> edges;           //pList of edges//
+    public float height;               
 
 
     public void TileSetup(int tID, int tEdgeCount)
