@@ -43,4 +43,20 @@ public class sTileMaths
         }
         return -1;
     }
+
+    public static Vector3 normal(Vector3 v)
+    {
+        double d = 1.0 / length(v);
+        return v * (float)d;
+    }
+
+    public static double length(Vector3 v)
+    {
+        return Mathf.Sqrt((float)squared_length(v));
+    }
+
+    public static double squared_length(Vector3 v)
+    {
+        return v.x * v.x + v.y * v.y + v.z + v.z;
+    }
 }
