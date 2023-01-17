@@ -173,5 +173,20 @@ public class SphereCreation : MonoBehaviour
                 intCount++;
             }
         }
+
+        Mesh mesh = new Mesh();
+        if(!transform.GetComponent<MeshFilter>() || !transform.GetComponent<MeshRenderer>())
+        {
+            transform.gameObject.AddComponent<MeshFilter>();
+            transform.gameObject.AddComponent<MeshRenderer>();
+        }
+
+        transform.GetComponent<MeshFilter>().mesh = mesh;
+
+        mesh.name = "MyOwnObject";
+        mesh.vertices = vertices;
+        mesh.triangles = indices;
+        mesh.RecalculateNormals();
+        mesh.Optimize();
     }
 }
