@@ -189,4 +189,42 @@ public class SphereCreation : MonoBehaviour
         mesh.RecalculateNormals();
         mesh.Optimize();
     }
+
+    sHexGrid CreateZeroSphere()
+    {
+        //Start all spheres with a zero size sphere to ease tile placement and then just increase them later//
+        Debug.Log("step 1");
+        //starting points//
+        sHexGrid grid = new sHexGrid();
+        grid.SetupHexGrid(0);
+        Debug.Log("Step 2");
+        float x = -0.525731112119133606f;
+        float z = -0.850650808352039932f;
+
+        Debug.Log("Step 3");
+        Vector3[] icosahedronTiles = //List of icosahedron tile placement// 
+        {
+            new Vector3(-x, 0, z), new Vector3(x, 0, z), new Vector3(-x, 0, -z), new Vector3(x, 0, -z),
+            new Vector3(0, z, x), new Vector3(0, z, -x), new Vector3(0, -z, x), new Vector3(0, -z, -x),
+            new Vector3(z, x, 0), new Vector3(-z, x, 0), new Vector3(z, -x, 0), new Vector3(-z, -x, 0)    
+        };
+
+        Debug.Log("Step 4");
+        int[,] icosahedronTileNumbers = //List of icosahedron tile numbering//
+        {
+            {9, 4, 1, 6, 11}, {4, 8, 10, 6, 0}, {11, 7, 3, 5, 9}, {2, 7, 10, 8, 5},
+            {9, 5, 8, 1, 0}, {2, 3, 8, 4, 9}, {0, 1, 10, 7, 11}, {11, 6, 10, 3, 2},
+            {5, 3, 10, 1, 4}, {2, 5, 4, 0, 11}, {3, 7, 6, 1, 8}, {7, 2, 9, 0, 6}
+        };
+
+        Debug.Log("Step 5");
+        foreach(sTile t in grid.tiles)
+        {
+            t.position = icosahedronTiles[t.id];
+            for(int i = 0; i < 5; i++)
+            {
+                t.tiles[i] = grid.tiles[icosahedronTileNumbers[t.id, i]];
+            }
+        }
+    }
 }
