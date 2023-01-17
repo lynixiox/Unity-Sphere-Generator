@@ -21,15 +21,51 @@ public class SphereCreation : MonoBehaviour
     public int size = 0;
     public Vector3[] vertices;
     public int[] indices;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        finalGrid = 
     }
 
-    // Update is called once per frame
-    void Update()
+    sHexGrid size_n_grid(int size)
     {
-        
+        if(size == 0)
+        {
+            return CreateZeroSizeSphere();
+        }
+        else
+        {
+            return CreateSubdividedSphere(size_n_grid( -1));
+        }
+    }
+
+    void CreateObjects()
+    {
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            Debug.Log("i: " + i);
+            var go = Instantiate(tilePrefab);
+            go.transform.parent = tileParent.transform;
+            go.GetComponent<HexagonTile>().SetupTile(finalGrid.tiles[i].position, finalGrid.tiles[i].corners, finalGrid.tiles[i]);
+        }
+    }
+
+    void CreateMesh()
+    {
+        int edgeCount = 0;
+        for(int i = 0 ; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 6)
+            {
+                edgeCount += 6; 
+            }
+            else
+            {
+                edgeCount += 5;
+            }
+        }
+
+        vertices = new Vector3[edgeCount];
     }
 }
