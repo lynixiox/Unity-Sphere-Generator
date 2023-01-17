@@ -351,6 +351,7 @@
 "Assets/Scripts/Sphere/SphereCreation.cs"
 "Assets/Scripts/Sphere/sCorner.cs"
 "Assets/Scripts/Sphere/sEdge.cs"
+"Assets/Scripts/Sphere/sHexGrid.cs"
 "Assets/Scripts/Sphere/sTile.cs"
 "Assets/Scripts/Sphere/sTileMaths.cs"
 -langversion:9.0
