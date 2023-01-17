@@ -67,5 +67,111 @@ public class SphereCreation : MonoBehaviour
         }
 
         vertices = new Vector3[edgeCount];
+
+        edgeCount = 0; 
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 5)
+            {
+                for(int o = 0; o < finalGrid.tiles[i].corners.Count; o++)
+                {
+                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].potision;
+                    edgeCount++;
+                }
+            }
+        }
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 6)
+            {
+                for(int o = 0 ; o < finalGrid.tiles[i].corners.Count; o++)
+                {
+                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].potision;
+                    edgeCount++;
+                }
+            }
+        }
+
+        edgeCount = 0 ;
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 6)
+            {
+                edgeCount += 12;
+            }
+            else
+            {
+                edgeCount += 9;
+            }
+        }
+        
+        indices = new int[edgeCount];
+        int intCount = 0;
+        int indCount = 0;
+        
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 5)
+            {
+                indices[indCount] = 0 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 1 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 2 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 2 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 3 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 0 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 0 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 3 + (intCount * 5);
+                indCount++;
+                indices[indCount] = 4 + (intCount * 5);
+
+                indCount++;
+                intCount++;
+                            
+            }
+        }
+
+        int oldCount = intCount * 5;
+        intCount = 0;
+        for(int i = 0; i < finalGrid.tiles.Count; i++)
+        {
+            if(finalGrid.tiles[i].edgeCount == 6)
+            {
+                indices[indCount] = 0 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 1 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 4 + (intCount * 6) + oldCount;
+                indCount++;
+
+                indices[indCount] = 1 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 2 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 3 + (intCount * 6) + oldCount;
+                indCount++;
+
+                indices[indCount] = 1 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 3 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 4 + (intCount * 6) + oldCount;
+                indCount++;
+
+                indices[indCount] = 0 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 4 + (intCount * 6) + oldCount;
+                indCount++;
+                indices[indCount] = 5 + (intCount * 6) + oldCount;
+                indCount++;
+                intCount++;
+            }
+        }
     }
 }
