@@ -31,12 +31,14 @@ public class SphereCreation : MonoBehaviour
 
     sHexGrid size_n_grid(int size)
     {
+        Debug.Log("size" + size);
         if(size == 0)
         {
             return CreateZeroSphere();
         }
         else
         {
+            Debug.Log("Final grid set to subdivided sphere");
             return CreateSubdividedSphere(size_n_grid(size -1));
         }
     }
@@ -288,43 +290,51 @@ public class SphereCreation : MonoBehaviour
         int prev_tile_count = previous.tiles.Count;
         int prev_corner_count = previous.corners.Count;
 
-        //old tiles//
-        for(int i = 0; i < prev_tile_count; i++)
+        //old tiles
+        for (int i = 0; i < prev_tile_count; i++)
         {
             nGrid.tiles[i].position = previous.tiles[i].position;
-            for(int k = 0; k < 3; k++)
+            for (int k = 0; k < nGrid.tiles[i].edgeCount; k++)
+            {
+                nGrid.tiles[i].tiles[k] = nGrid.tiles[previous.tiles[i].corners[k].id + prev_tile_count];
+            }
+        }
+        //old corners become tiles
+        for (int i = 0; i < prev_corner_count; i++)
+        {
+            nGrid.tiles[i + prev_tile_count].position = previous.corners[i].potision;
+            for (int k = 0; k < 3; k++)
             {
                 nGrid.tiles[i + prev_tile_count].tiles[2 * k] = nGrid.tiles[previous.corners[i].corners[k].id + prev_tile_count];
                 nGrid.tiles[i + prev_tile_count].tiles[2 * k + 1] = nGrid.tiles[previous.corners[i].tiles[k].id];
             }
         }
-
-        //new corners//
+        //new corners
         int next_corner_id = 0;
         foreach(sTile n in previous.tiles)
         {
             sTile t = nGrid.tiles[n.id];
-            for(int k = 0; k < t.edgeCount; k++)
+            for(int k = 0; k < t.edgeCount;k++)
             {
-                AddCorner(next_corner_id, nGrid, t.id, t.tiles[(k + t.edgeCount -1) % t.edgeCount].id, t.tiles[k].id);
+                AddCorner(next_corner_id, nGrid, t.id, t.tiles[(k + t.edgeCount - 1) % t.edgeCount].id, t.tiles[k].id);
                 next_corner_id++;
             }
         }
 
-        //Connect the corners//
+        //connect corners
         foreach(sCorner c in nGrid.corners)
         {
-            for(int k = 0; k < 3; k++)
+            for(int k = 0; k < 3;k++)
             {
-                c.corners[k] = c.tiles[k].corners[(sTileMaths.CalculatePosition(c.tiles[k],c) + 1) % (c.tiles[k].edgeCount)];
+                c.corners[k] = c.tiles[k].corners[(sTileMaths.CalculatePosition(c.tiles[k], c) + 1) % (c.tiles[k].edgeCount)];
             }
         }
 
-        //new edges//
+        //new edges
         int next_edge_id = 0;
         foreach(sTile t in nGrid.tiles)
         {
-            for(int k = 0 ; k < t.edgeCount; k++)
+            for(int k = 0; k < t.edgeCount; k++)
             {
                 if(t.edges[k] == null)
                 {
