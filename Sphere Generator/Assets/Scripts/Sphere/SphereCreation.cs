@@ -37,7 +37,7 @@ public class SphereCreation : MonoBehaviour
         }
         else
         {
-            return CreateSubdividedSphere(size_n_grid( -1));
+            return CreateSubdividedSphere(size_n_grid(size -1));
         }
     }
 
@@ -267,8 +267,12 @@ public class SphereCreation : MonoBehaviour
         {
             for(int i = 0; i < 5; i++)
             {
-                AddEdge(newEdgeID, grid, t.id, icosahedronTileNumbers[t.id, i]);
-                newEdgeID++;
+                if(t.edges[i] == null)
+                {
+                    AddEdge(newEdgeID, grid, t.id, icosahedronTileNumbers[t.id, i]);
+                    newEdgeID++;
+                }
+
             }
         }
 

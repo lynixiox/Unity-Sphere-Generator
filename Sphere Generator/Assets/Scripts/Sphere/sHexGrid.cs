@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class sHexGrid : MonoBehaviour
+public class sHexGrid
 {
 
     public int gridSize;
@@ -41,6 +41,7 @@ public class sHexGrid : MonoBehaviour
         }
     }
 
+ 
     int CalculateTileCount(int size)
     {
         return (int)(10 * Mathf.Pow(3, size) + 2);
