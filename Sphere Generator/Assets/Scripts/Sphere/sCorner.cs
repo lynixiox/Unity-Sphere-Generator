@@ -5,7 +5,7 @@ using UnityEngine;
 public class sCorner
 {
     public int id;                  //corner ID//
-    public Vector3 potision;        //corner position//
+    public Vector3 position;        //corner position//
     public sTile[] tiles;           //adjacent tiles//
     public sCorner[] corners;       //connected corners//
     public sEdge[] edges;           //adjacent edges//

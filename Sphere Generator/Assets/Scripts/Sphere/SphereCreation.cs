@@ -78,7 +78,7 @@ public class SphereCreation : MonoBehaviour
             {
                 for(int o = 0; o < finalGrid.tiles[i].corners.Count; o++)
                 {
-                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].potision;
+                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].position;
                     edgeCount++;
                 }
             }
@@ -89,7 +89,7 @@ public class SphereCreation : MonoBehaviour
             {
                 for(int o = 0 ; o < finalGrid.tiles[i].corners.Count; o++)
                 {
-                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].potision;
+                    vertices[edgeCount] = finalGrid.tiles[i].corners[o].position;
                     edgeCount++;
                 }
             }
@@ -302,7 +302,7 @@ public class SphereCreation : MonoBehaviour
         //old corners become tiles
         for (int i = 0; i < prev_corner_count; i++)
         {
-            nGrid.tiles[i + prev_tile_count].position = previous.corners[i].potision;
+            nGrid.tiles[i + prev_tile_count].position = previous.corners[i].position;
             for (int k = 0; k < 3; k++)
             {
                 nGrid.tiles[i + prev_tile_count].tiles[2 * k] = nGrid.tiles[previous.corners[i].corners[k].id + prev_tile_count];
@@ -353,7 +353,7 @@ public class SphereCreation : MonoBehaviour
         sCorner c = grid.corners[id];
         sTile[] t = {grid.tiles[t1], grid.tiles[t2], grid.tiles[t3]};
         Vector3 pos = t[0].position + t[1].position + t[2].position;
-        c.potision = sTileMaths.normal(pos);
+        c.position = sTileMaths.normal(pos);
 
         for(int i = 0 ; i < 3; i++)
         {
